@@ -6,6 +6,7 @@ import org.ebuitra10.smarorderaiproject.msvc.users.repositories.IUserRepository;
 import org.ebuitra10.smarorderaiproject.msvc.users.repositories.jpaRepository.IUserJpaRespository;
 import org.ebuitra10.smarorderaiproject.msvc.users.services.usecase.IUserServiceUseCase;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,16 +19,19 @@ public class UserServiceImpl implements IUserServiceUseCase {
 
 
 
+    @Transactional(readOnly = true)
     @Override
     public List<UserEntity> getAll() {
         return userRepository.getAll();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<UserEntity> getById(Integer id) {
         return userRepository.getById(id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Optional<UserEntity> getByUserName(String userName) {
 
@@ -35,6 +39,7 @@ public class UserServiceImpl implements IUserServiceUseCase {
 
     }
 
+    @Transactional
     @Override
     public UserEntity save(UserEntity saveUser) {
         Optional<UserEntity> o = userRepository.getById(saveUser.getId());
@@ -45,6 +50,7 @@ public class UserServiceImpl implements IUserServiceUseCase {
         return userRepository.save(saveUser);
     }
 
+    @Transactional
     @Override
     public UserEntity update(UserEntity userUpdate) {
 
@@ -62,8 +68,14 @@ public class UserServiceImpl implements IUserServiceUseCase {
         return userRepository.save(newUser);
     }
 
+    @Transactional
     @Override
     public boolean deleteById(Integer id) {
-        return false;
+        Optional<UserEntity> user = userRepository.getById(id);
+        if (!user.isPresent()){
+            throw (new RuntimeException("El numero de documento ingresado no existe"));
+        }
+        userRepository.deleteById(id);
+        return true;
     }
 }
