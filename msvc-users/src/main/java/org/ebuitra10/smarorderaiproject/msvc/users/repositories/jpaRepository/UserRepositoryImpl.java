@@ -8,6 +8,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Clase que funcionara como repositorio para interactuar con la base de datos.
+ * Implementa la interfaz {@link IUserRepository} y deja las operaciones al repositorio
+ * JPA correspondiente.
+ */
 @RequiredArgsConstructor
 @Repository
 public class UserRepositoryImpl implements IUserRepository {

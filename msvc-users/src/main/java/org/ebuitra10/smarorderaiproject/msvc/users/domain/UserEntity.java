@@ -12,6 +12,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * Clase que contiene entidades y los atributos de la tabla "users" de la base de datos.
+ */
 
 @Data
 @Entity
