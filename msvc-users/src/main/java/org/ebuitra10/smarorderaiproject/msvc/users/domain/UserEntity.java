@@ -1,10 +1,7 @@
 package org.ebuitra10.smarorderaiproject.msvc.users.domain;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -39,7 +36,7 @@ public class UserEntity {
     @NotEmpty
     private String password;
 
-
+    @Transient
     List<UserEntity> userEntityList;
 
 }

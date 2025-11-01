@@ -17,7 +17,6 @@ import java.util.Map;
 
 /**
  * Controlador REST encargado de gestionar las operaciones relacionadas con los usuarios.
- *
  * Expone los endpoints para crear, consultar, actualizar y eliminar usuarios,
  * comunicándose con la capa de servicio {@link IUserServiceUseCase}.
  */
@@ -50,7 +49,7 @@ public class UserController {
         try {
             return ResponseEntity.ok(userServiceUseCase.getById(id));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
@@ -66,7 +65,7 @@ public class UserController {
         try {
             return ResponseEntity.ok(userServiceUseCase.getByUserName(userName));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
@@ -88,7 +87,7 @@ public class UserController {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(userServiceUseCase.save(newUser));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
@@ -110,7 +109,7 @@ public class UserController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(userServiceUseCase.update(updateUser));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
@@ -126,7 +125,7 @@ public class UserController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(userServiceUseCase.deleteById(id));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
