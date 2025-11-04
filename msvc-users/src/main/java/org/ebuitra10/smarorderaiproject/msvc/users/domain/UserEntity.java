@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 
+
 import java.util.List;
 
 /**
@@ -38,5 +39,7 @@ public class UserEntity {
 
     @Transient
     List<UserEntity> userEntityList;
+
+
 
 }

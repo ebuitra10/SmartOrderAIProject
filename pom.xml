@@ -18,6 +18,7 @@
 
     <modules>
         <module>msvc-users</module>
+        <module>msvc-orders</module>
     </modules>
 
     <properties>

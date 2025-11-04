@@ -1,8 +1,8 @@
-package org.ebuitra10.smarorderaiproject.msvc.users.repositories.jpaRepository;
+package org.ebuitra10.smarorderaiproject.msvc.users.repositories;
 
 import lombok.RequiredArgsConstructor;
 import org.ebuitra10.smarorderaiproject.msvc.users.domain.UserEntity;
-import org.ebuitra10.smarorderaiproject.msvc.users.repositories.IUserRepository;
+import org.ebuitra10.smarorderaiproject.msvc.users.repositories.jpaRepository.IUserJpaRespository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

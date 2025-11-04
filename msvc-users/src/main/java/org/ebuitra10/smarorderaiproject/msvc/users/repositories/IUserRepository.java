@@ -1,7 +1,6 @@
 package org.ebuitra10.smarorderaiproject.msvc.users.repositories;
 
 import org.ebuitra10.smarorderaiproject.msvc.users.domain.UserEntity;
-import org.ebuitra10.smarorderaiproject.msvc.users.repositories.jpaRepository.UserRepositoryImpl;
 
 import java.util.List;
 import java.util.Optional;
