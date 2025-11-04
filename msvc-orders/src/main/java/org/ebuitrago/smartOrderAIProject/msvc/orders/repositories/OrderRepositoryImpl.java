@@ -47,7 +47,7 @@ public class OrderRepositoryImpl implements IOrderRepository {
     }
 
     @Override
-    public void delete(OrderEntity orderEntity) {
-        iOrderJpaRepository.delete(orderEntity);
+    public void deleteById(Integer id) {
+        iOrderJpaRepository.deleteById(id);
     }
 }

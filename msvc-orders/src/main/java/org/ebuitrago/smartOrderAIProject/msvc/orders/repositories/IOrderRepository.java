@@ -53,5 +53,5 @@ public interface IOrderRepository {
      *
      * @param orderEntity la entidad {@link OrderEntity} que se desea eliminar.
      */
-    void delete(OrderEntity orderEntity);
+    void deleteById(Integer id);
 }
