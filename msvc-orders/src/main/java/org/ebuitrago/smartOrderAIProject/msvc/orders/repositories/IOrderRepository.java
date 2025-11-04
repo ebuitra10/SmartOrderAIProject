@@ -51,7 +51,7 @@ public interface IOrderRepository {
     /**
      * Elimina una orden existente de la base de datos.
      *
-     * @param orderEntity la entidad {@link OrderEntity} que se desea eliminar.
+     * @param id la entidad {@link OrderEntity} que se desea eliminar.
      */
     void deleteById(Integer id);
 }
