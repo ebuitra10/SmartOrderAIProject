@@ -32,6 +32,11 @@ public class OrderRepositoryImpl implements IOrderRepository {
     }
 
     @Override
+    public List<OrderEntity> getByUserId(Integer userId) {
+        return iOrderJpaRepository.findByUserId(userId);
+    }
+
+    @Override
     public Optional<OrderEntity> getById(Integer id) {
         return iOrderJpaRepository.findById(id);
     }
@@ -50,4 +55,5 @@ public class OrderRepositoryImpl implements IOrderRepository {
     public void deleteById(Integer id) {
         iOrderJpaRepository.deleteById(id);
     }
+
 }

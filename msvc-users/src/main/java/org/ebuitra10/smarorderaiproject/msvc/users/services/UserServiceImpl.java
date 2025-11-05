@@ -1,6 +1,8 @@
 package org.ebuitra10.smarorderaiproject.msvc.users.services;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.ebuitra10.smarorderaiproject.msvc.users.domain.UserEntity;
 import org.ebuitra10.smarorderaiproject.msvc.users.repositories.IUserRepository;
 import org.ebuitra10.smarorderaiproject.msvc.users.services.usecase.IUserServiceUseCase;
@@ -14,6 +16,8 @@ import java.util.Optional;
  * Servicio que se comunica con el repositorio para realizar las respectivas validaciones
  * de logica de negocio.
  */
+
+
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements IUserServiceUseCase {

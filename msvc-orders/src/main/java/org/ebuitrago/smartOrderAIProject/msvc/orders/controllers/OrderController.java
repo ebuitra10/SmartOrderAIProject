@@ -126,6 +126,22 @@ public class OrderController {
         }
     }
 
+
+    /**
+     * Obtiene una lista de ordenes segun el usuario indicado
+     * @param userId el numero de documento del usuario a buscar
+     * @return la lista de ordenes filtrada por el usuario ingresado
+     */
+    @GetMapping("/orders-by-user/{userId}")
+    public ResponseEntity<?> getOrdersByUser(@Valid @PathVariable Integer userId) {
+        try {
+            return ResponseEntity.ok(iOrderServiceUseCase.getOrdersByUser(userId));
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
     /**
      * Método de utilidad para construir un mapa de errores de validación desde un {@link BindingResult}.
      *

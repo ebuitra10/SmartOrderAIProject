@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.OrderEntity;
+import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.OrderResponseDto;
 import org.ebuitrago.smartOrderAIProject.msvc.orders.repositories.IOrderRepository;
 import org.ebuitrago.smartOrderAIProject.msvc.orders.services.usecase.IOrderServiceUseCase;
 import org.springframework.stereotype.Service;
@@ -138,5 +139,25 @@ public class OrderServiceImpl implements IOrderServiceUseCase {
         iOrderRepository.deleteById(id);
         return true;
 
+    }
+
+    /**
+     * Obtiene una lista de ordenes pero con detalle minimo filtrada por un usuario en especifico
+     * @param userId el usuario a buscar para filtrar sus ordenes
+     * @return una lista de ordenes asociadas a ese usuario y convertidas en DTO
+     */
+    @Override
+    public List<OrderResponseDto> getOrdersByUser(Integer userId) {
+
+        List<OrderEntity> order = iOrderRepository.getByUserId(userId);
+        if (order.isEmpty()) {
+            throw (new RuntimeException("El usuario ingresado no existe"));
+        }
+
+        List<OrderResponseDto> orderResponse = order.stream()
+                .map(orderEntity -> new OrderResponseDto(orderEntity.getId(), orderEntity.getUserId(), orderEntity.getDate()))
+                .toList();
+
+        return  orderResponse;
     }
 }

@@ -113,6 +113,8 @@ public class UserController {
         }
     }
 
+
+
     /**
      * Elimina un usuario según su identificador.
      *
@@ -128,6 +130,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
+
 
     /**
      * Método auxiliar para procesar los errores de validación de los campos del usuario.

@@ -1,6 +1,8 @@
 package org.ebuitrago.smartOrderAIProject.msvc.orders.services.usecase;
 
 import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.OrderEntity;
+import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.OrderResponseDto;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -62,5 +64,15 @@ public interface IOrderServiceUseCase {
      * @throws RuntimeException si no existe una orden con el ID proporcionado.
      */
     Boolean deleteById(Integer id);
+
+
+    /**
+     * Obtiene una lista de ordenes asociadas a un usuario
+     * @param userId el usuario a buscar para filtrar sus ordenes
+     * @return una lista de ordenes {@link OrderEntity} asociadas al usuario
+     */
+    List<OrderResponseDto> getOrdersByUser(Integer userId);
+
+
 }
 

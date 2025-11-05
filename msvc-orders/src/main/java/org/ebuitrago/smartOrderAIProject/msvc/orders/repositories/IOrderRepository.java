@@ -23,6 +23,13 @@ public interface IOrderRepository {
     List<OrderEntity> getAll();
 
     /**
+     * Obtiene todas las ordenes registradas por un usuario
+     * @param userId el usuario con su documento a buscar para filtrar las ordenes
+     * @return una lista de ordenes {@link OrderEntity} asociadas al usuario
+     */
+    List<OrderEntity> getByUserId(Integer userId);
+
+    /**
      * Busca una orden específica por su identificador único.
      *
      * @param id el identificador de la orden a buscar.
@@ -54,4 +61,7 @@ public interface IOrderRepository {
      * @param id la entidad {@link OrderEntity} que se desea eliminar.
      */
     void deleteById(Integer id);
+
+
+
 }

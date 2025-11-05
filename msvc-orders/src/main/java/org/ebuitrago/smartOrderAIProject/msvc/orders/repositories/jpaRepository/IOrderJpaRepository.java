@@ -23,4 +23,12 @@ public interface IOrderJpaRepository extends JpaRepository<OrderEntity, Integer>
      * @return una lista de entidades {@link OrderEntity} que coinciden con la fecha indicada.
      */
     List<OrderEntity> findByDate(LocalDate orderByDate);
+
+    /**
+     * Busca todas las ordenes asociadas a un usuario que se busca con su numero de documento
+     * @param userId el usuario para filtrar sus ordenes
+     * @return Una lista de ordenes {@link OrderEntity} que coindicen con el usuario
+     */
+    List<OrderEntity> findByUserId(Integer userId);
+
 }
