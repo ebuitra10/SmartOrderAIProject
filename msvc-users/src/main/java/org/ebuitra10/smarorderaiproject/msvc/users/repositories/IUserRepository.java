@@ -45,6 +45,5 @@ public interface IUserRepository {
     void deleteById(Integer id);
 
 
-    List<UserEntity> getOrdersByUser(Iterable<Integer> ids);
 
 }
