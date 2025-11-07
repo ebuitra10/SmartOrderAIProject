@@ -2,7 +2,9 @@ package org.ebuitrago.smartorderaiproject.msvc.products.repositories.JpaReposito
 
 import org.ebuitrago.smartorderaiproject.msvc.products.domain.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.Optional;
+
+import java.util.List;
+
 
 /**
  * Repositorio JPA para la gestión de la entidad {@link ProductEntity}.
@@ -14,12 +16,5 @@ import java.util.Optional;
  */
 public interface IProductJpaRepository extends JpaRepository<ProductEntity, Integer> {
 
-    /**
-     * Busca un producto por su código interno o SKU.
-     *
-     * @param productCode el código del producto a buscar.
-     * @return un {@link Optional} conteniendo la entidad {@link ProductEntity} si se encuentra,
-     * o vacío si no existe un producto con el código especificado.
-     */
-    Optional<ProductEntity> findByProductCode(String productCode);
+    List<ProductEntity> findProductEntitiesByProductCode(String productCode);
 }

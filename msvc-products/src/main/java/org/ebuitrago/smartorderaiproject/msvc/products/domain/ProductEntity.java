@@ -21,22 +21,23 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     @Column(name = "name", nullable = false)
     private String productName;
 
+    @NotNull
     @Column(name = "product_code", nullable = false)
     private String productCode;
 
     @NotNull
-    private Integer stock;
-
-    @NotNull
     private BigDecimal price;
 
+    @NotNull
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
-    @Column(name = "creation_date", nullable = false)
+
+    @Column(name = "creation_date")
     private LocalDate createdDate;
 
     private String description;

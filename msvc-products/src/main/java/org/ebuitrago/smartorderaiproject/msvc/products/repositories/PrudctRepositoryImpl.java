@@ -33,8 +33,8 @@ public class PrudctRepositoryImpl implements  IProductRespository {
     }
 
     @Override
-    public Optional<ProductEntity> getByProductCode(String productCode) {
-        return iProductJpaRepository.findByProductCode(productCode);
+    public List<ProductEntity> getByProductCode(String productCode) {
+        return iProductJpaRepository.findProductEntitiesByProductCode(productCode);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class PrudctRepositoryImpl implements  IProductRespository {
     }
 
     @Override
-    public void delete(ProductEntity productEntity) {
-        iProductJpaRepository.delete(productEntity);
+    public void deleteById(Integer id) {
+        iProductJpaRepository.deleteById(id);
     }
 }

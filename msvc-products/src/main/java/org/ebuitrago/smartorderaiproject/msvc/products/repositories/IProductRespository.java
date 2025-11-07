@@ -37,7 +37,7 @@ public interface IProductRespository {
      * @return un {@link Optional} conteniendo la entidad {@link ProductEntity} si existe,
      * o vacío si no se encuentra.
      */
-    Optional<ProductEntity> getByProductCode(String productCode);
+    List<ProductEntity> getByProductCode(String productCode);
 
     /**
      * Guarda o actualiza un producto en la base de datos.
@@ -50,7 +50,7 @@ public interface IProductRespository {
     /**
      * Elimina un producto de la base de datos.
      *
-     * @param productEntity la entidad {@link ProductEntity} que se desea eliminar.
+     * @param id la entidad {@link ProductEntity} que se desea eliminar.
      */
-    void delete(ProductEntity productEntity);
+    void deleteById(Integer id);
 }
