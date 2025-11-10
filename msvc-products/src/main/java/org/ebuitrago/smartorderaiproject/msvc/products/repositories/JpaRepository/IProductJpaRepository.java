@@ -17,4 +17,7 @@ import java.util.List;
 public interface IProductJpaRepository extends JpaRepository<ProductEntity, Integer> {
 
     List<ProductEntity> findProductEntitiesByProductCode(String productCode);
+
+    ProductEntity deleteByProductCode(String productCode);
+
 }

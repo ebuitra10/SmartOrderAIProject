@@ -44,8 +44,5 @@ public class UserRepositoryImpl implements IUserRepository {
         userJpaRespository.deleteById(id);
     }
 
-    @Override
-    public List<UserEntity> getOrdersByUser(Iterable<Integer> ids) {
-        return userJpaRespository.findAllById(ids);
-    }
+
 }

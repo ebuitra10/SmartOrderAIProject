@@ -2,7 +2,9 @@ package org.ebuitrago.smartorderaiproject.msvc.products.services;
 
 
 import lombok.RequiredArgsConstructor;
+import org.ebuitrago.smartorderaiproject.msvc.products.clientRest.InventoryClientRest;
 import org.ebuitrago.smartorderaiproject.msvc.products.domain.ProductEntity;
+import org.ebuitrago.smartorderaiproject.msvc.products.domain.dto.InventoryRequest;
 import org.ebuitrago.smartorderaiproject.msvc.products.repositories.IProductRespository;
 import org.ebuitrago.smartorderaiproject.msvc.products.services.useCase.IProductUseCase;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,8 @@ import java.util.Optional;
 public class ProductServiceImpl implements IProductUseCase {
 
     private final IProductRespository iProductRespository;
+
+    private final InventoryClientRest  inventoryClientRest;
 
     /**
      * Obtiene la lista completa de productos.
@@ -83,12 +87,20 @@ public class ProductServiceImpl implements IProductUseCase {
     @Transactional
     @Override
     public ProductEntity save(ProductEntity newProduct) {
-        return iProductRespository.save(newProduct);
+
+        ProductEntity saved = iProductRespository.save(newProduct);
+
+        InventoryRequest inventoryRequest = new InventoryRequest(saved.getProductCode(),1);
+
+        inventoryClientRest.save(inventoryRequest);
+
+        return saved;
     }
 
     /**
      * Actualiza un producto existente.
      * <p>Verifica la existencia y coherencia del código interno antes de actualizar.</p>
+     * Actualiza tambien el inventario de los productos llamando a InventoryClientRest
      *
      * @throws RuntimeException si no existe el producto o los códigos no coinciden
      */
@@ -98,8 +110,8 @@ public class ProductServiceImpl implements IProductUseCase {
 
         Optional<ProductEntity> productDb = iProductRespository.getById(updatedProduct.getId());
 
-        if(productDb.isEmpty() || !(productDb.get().getProductCode().equals(updatedProduct.getProductCode()))){
-            throw (new RuntimeException("No existe el producto con el codigo: " + updatedProduct.getProductCode()));
+        if(productDb.isEmpty()){
+            throw (new RuntimeException("No existe el producto con el id: " + updatedProduct.getId()));
         }
 
         ProductEntity productEntity = productDb.get();
@@ -109,6 +121,13 @@ public class ProductServiceImpl implements IProductUseCase {
         productEntity.setImageUrl(updatedProduct.getImageUrl());
         productEntity.setDescription(updatedProduct.getDescription());
 
+        Integer productStock = inventoryClientRest.getStockByProductCode(productEntity.getProductCode());
+
+        InventoryRequest inventoryRequest = new InventoryRequest();
+        inventoryRequest.setProductCode(updatedProduct.getProductCode());
+        inventoryRequest.setInitialStock(productStock);
+
+        inventoryClientRest.save(inventoryRequest);
         return iProductRespository.save(productEntity);
     }
 
@@ -126,7 +145,10 @@ public class ProductServiceImpl implements IProductUseCase {
         if(productDb.isEmpty()){
             throw (new RuntimeException("No existe el producto con el codigo: " + id));
         }
-        iProductRespository.deleteById(id);
+
+
+        iProductRespository.deleteById(productDb.get().getId());
+        inventoryClientRest.delete(productDb.get().getProductCode());
 
         return true;
     }

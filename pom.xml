@@ -20,6 +20,7 @@
         <module>msvc-users</module>
         <module>msvc-orders</module>
         <module>msvc-products</module>
+        <module>msvc-inventory</module>
     </modules>
 
     <properties>
