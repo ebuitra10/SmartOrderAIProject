@@ -1,4 +1,4 @@
-package org.ebuitrago.smartOrderAIProject.msvc.orders.domain;
+package org.ebuitrago.smartOrderAIProject.msvc.orders.domain.dto;
 
 
 import lombok.AllArgsConstructor;

@@ -47,13 +47,6 @@ public class OrderEntity {
     @NotBlank(message = "El nombre de la tienda no puede estar vacío")
     private String store;
 
-    /**
-     * Precio total de la orden.
-     * Es obligatorio y no puede ser nulo.
-     */
-    @NotNull(message = "El precio total no puede ser nulo")
-    @Column(name = "total_price")
-    private BigDecimal totalPrice;
 
     /**
      * Método de pago de la orden (ejemplo: "tarjeta", "efectivo").

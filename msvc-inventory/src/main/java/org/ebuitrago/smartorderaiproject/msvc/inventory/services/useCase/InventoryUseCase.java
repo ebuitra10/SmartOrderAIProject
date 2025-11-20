@@ -1,7 +1,7 @@
 package org.ebuitrago.smartorderaiproject.msvc.inventory.services.useCase;
 
 import org.ebuitrago.smartorderaiproject.msvc.inventory.domain.InventoryEntity;
-import org.ebuitrago.smartorderaiproject.msvc.inventory.domain.dto.InventoryRequest;
+import org.ebuitrago.smartorderaiproject.msvc.inventory.domain.dto.InventoryResponseDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +43,10 @@ public interface InventoryUseCase {
      * @param newProduct datos del inventario a registrar o actualizar.
      * @return el inventario creado o actualizado.
      */
-    InventoryEntity createOrUpdateInvetory(InventoryRequest newProduct);
+    InventoryEntity createOrUpdateInvetory(InventoryResponseDto newProduct);
+
+
+    InventoryEntity decrementInventory(String productCode, Integer quantity);
 
     /**
      * Elimina un registro de inventario según el código del producto.

@@ -1,7 +1,7 @@
 package org.ebuitrago.smartOrderAIProject.msvc.orders.services.usecase;
 
 import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.OrderEntity;
-import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.OrderResponseDto;
+import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.dto.OrderResponseDto;
 
 import java.time.LocalDate;
 import java.util.List;

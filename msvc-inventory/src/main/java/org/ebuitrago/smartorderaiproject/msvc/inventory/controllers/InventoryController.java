@@ -4,7 +4,7 @@ package org.ebuitrago.smartorderaiproject.msvc.inventory.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.ebuitrago.smartorderaiproject.msvc.inventory.domain.dto.InventoryRequest;
+import org.ebuitrago.smartorderaiproject.msvc.inventory.domain.dto.InventoryResponseDto;
 import org.ebuitrago.smartorderaiproject.msvc.inventory.services.useCase.InventoryUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +36,9 @@ public class InventoryController {
      */
     @GetMapping
     public ResponseEntity<?> getAll() {
+
         return ResponseEntity.ok(inventoryUseCase.getAll());
+
     }
 
     /**
@@ -47,11 +49,13 @@ public class InventoryController {
      */
     @GetMapping("/{productCode}")
     ResponseEntity<?> getAllByProductCode(@PathVariable String productCode) {
+
         try {
             return ResponseEntity.ok(inventoryUseCase.getAllByProductCode(productCode));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+
     }
 
     /**
@@ -62,11 +66,13 @@ public class InventoryController {
      */
     @GetMapping("/stock-by-code/{productCode}")
     ResponseEntity<?> getStockByProductCode(@PathVariable String productCode) {
+
         try {
             return ResponseEntity.ok(inventoryUseCase.getStockByProductCode(productCode));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+
     }
 
     /**
@@ -77,7 +83,8 @@ public class InventoryController {
      * @return respuesta con el inventario creado/actualizado o errores de validación.
      */
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody InventoryRequest inventory, BindingResult result) {
+    public ResponseEntity<?> save(@Valid @RequestBody InventoryResponseDto inventory, BindingResult result) {
+
         if (result.hasErrors()) {
             validar(result);
         }
@@ -88,7 +95,21 @@ public class InventoryController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+
     }
+
+    @PutMapping("/{productCode}/decrement-stock")
+    public ResponseEntity<?> decrementStock(@PathVariable String productCode, @RequestParam Integer quantity) {
+
+
+        try {
+            return ResponseEntity.ok(inventoryUseCase.decrementInventory(productCode, quantity));
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+    }
+
 
     /**
      * Reduce en una unidad el stock de un producto por su código.
@@ -98,11 +119,13 @@ public class InventoryController {
      */
     @DeleteMapping("/delete-inventory/{productCode}")
     public ResponseEntity<?> delete(@PathVariable String productCode) {
+
         try {
             return ResponseEntity.ok(inventoryUseCase.deleteByProductCode(productCode));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+
     }
 
     /**
@@ -112,6 +135,7 @@ public class InventoryController {
      * @return respuesta con los campos y mensajes de error.
      */
     private static ResponseEntity<?> validar(BindingResult result) {
+
         Map<String, String> errors = new HashMap<>();
 
         result.getFieldErrors().forEach(error ->
@@ -120,5 +144,6 @@ public class InventoryController {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
+
 }
 

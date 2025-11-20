@@ -6,9 +6,10 @@ import lombok.*;
 @Getter@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class InventoryRequest {
+public class InventoryResponseDto {
 
     private String productCode;
 
     private Integer initialStock;
+
 }

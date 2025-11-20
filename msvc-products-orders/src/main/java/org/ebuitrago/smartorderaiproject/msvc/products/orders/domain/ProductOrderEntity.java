@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 /**
  * Entidad que representa la relación entre productos y órdenes.
  *
@@ -21,8 +23,8 @@ public class ProductOrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "product_id", nullable = false)
-    private Integer productid;
+    @Column(name = "product_code", nullable = false)
+    private String productCode;
 
     @Column(name = "order_id", nullable = false)
     private Integer orderId;
@@ -36,5 +38,12 @@ public class ProductOrderEntity {
 
     @NotNull
     private BigDecimal subtotal;
+
+    @NotNull
+    @Column(name = "total_price")
+    private BigDecimal totalPrice;
+
+    @Transient
+    List<ProductOrderEntity> productOrders;
 }
 

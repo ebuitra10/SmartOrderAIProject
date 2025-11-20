@@ -4,8 +4,9 @@ package org.ebuitrago.smartOrderAIProject.msvc.orders.services;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.ebuitrago.smartOrderAIProject.msvc.orders.clientrest.ProductOrderClientRest;
 import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.OrderEntity;
-import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.OrderResponseDto;
+import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.dto.OrderResponseDto;
 import org.ebuitrago.smartOrderAIProject.msvc.orders.repositories.IOrderRepository;
 import org.ebuitrago.smartOrderAIProject.msvc.orders.services.usecase.IOrderServiceUseCase;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,8 @@ import java.util.Optional;
 public class OrderServiceImpl implements IOrderServiceUseCase {
 
     private final IOrderRepository iOrderRepository;
+
+    private final ProductOrderClientRest rest;
 
     /**
      * Obtiene todas las órdenes registradas.
@@ -89,7 +92,10 @@ public class OrderServiceImpl implements IOrderServiceUseCase {
     @Transactional
     @Override
     public OrderEntity save(OrderEntity orderEntity) {
-        return iOrderRepository.save(orderEntity);
+
+       return iOrderRepository.save(orderEntity);
+
+
     }
 
     /**
@@ -112,7 +118,6 @@ public class OrderServiceImpl implements IOrderServiceUseCase {
         OrderEntity updatedOrder = order.get();
         updatedOrder.setDate(orderEntity.getDate());
         updatedOrder.setStore(orderEntity.getStore());
-        updatedOrder.setTotalPrice(orderEntity.getTotalPrice());
         updatedOrder.setPaymentMethod(orderEntity.getPaymentMethod());
 
         return updatedOrder;
@@ -137,6 +142,7 @@ public class OrderServiceImpl implements IOrderServiceUseCase {
         }
 
         iOrderRepository.deleteById(id);
+        rest.deleteById(id);
         return true;
 
     }

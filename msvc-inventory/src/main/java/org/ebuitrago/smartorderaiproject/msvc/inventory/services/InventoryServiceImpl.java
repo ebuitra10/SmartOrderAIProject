@@ -1,8 +1,9 @@
 package org.ebuitrago.smartorderaiproject.msvc.inventory.services;
 
+
 import lombok.RequiredArgsConstructor;
 import org.ebuitrago.smartorderaiproject.msvc.inventory.domain.InventoryEntity;
-import org.ebuitrago.smartorderaiproject.msvc.inventory.domain.dto.InventoryRequest;
+import org.ebuitrago.smartorderaiproject.msvc.inventory.domain.dto.InventoryResponseDto;
 import org.ebuitrago.smartorderaiproject.msvc.inventory.repositories.InvetoryRepository;
 import org.ebuitrago.smartorderaiproject.msvc.inventory.services.useCase.InventoryUseCase;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,7 @@ public class InventoryServiceImpl implements InventoryUseCase {
     @Transactional(readOnly = true)
     @Override
     public List<InventoryEntity> getAllByProductCode(String productCode) {
+
         List<InventoryEntity> product = invetoryRepository.getAllByProductCode(productCode);
 
         if (product.isEmpty()) {
@@ -54,6 +56,7 @@ public class InventoryServiceImpl implements InventoryUseCase {
         }
 
         return product;
+
     }
 
     /**
@@ -65,6 +68,7 @@ public class InventoryServiceImpl implements InventoryUseCase {
      */
     @Transactional(readOnly = true)
     public Optional<Integer> getStockByProductCode(String productCode) {
+
         Optional<InventoryEntity> product = invetoryRepository.getByProductCode(productCode);
         if (product.isEmpty()) {
             throw new RuntimeException("No existe el producto por el código que ingresaste");
@@ -72,6 +76,7 @@ public class InventoryServiceImpl implements InventoryUseCase {
 
         Integer stockProduct = product.get().getStockQuantity();
         return Optional.of(stockProduct);
+
     }
 
     /**
@@ -85,17 +90,16 @@ public class InventoryServiceImpl implements InventoryUseCase {
      */
     @Transactional
     @Override
-    public InventoryEntity createOrUpdateInvetory(InventoryRequest newProduct) {
+    public InventoryEntity createOrUpdateInvetory(InventoryResponseDto newProduct) {
+
         Optional<InventoryEntity> inventoryDb = invetoryRepository.getByProductCode(newProduct.getProductCode());
         InventoryEntity inventoryEntity;
 
         if (inventoryDb.isPresent()) {
             inventoryEntity = inventoryDb.get();
-            if (inventoryEntity.getStockQuantity().equals(newProduct.getInitialStock())) {
-                return null;
+            if (inventoryEntity.getProductCode().equals(newProduct.getProductCode())) {
+                inventoryEntity.setStockQuantity(newProduct.getInitialStock() + inventoryEntity.getStockQuantity());
             }
-
-            inventoryEntity.setStockQuantity(newProduct.getInitialStock() + inventoryEntity.getStockQuantity());
         } else {
             inventoryEntity = new InventoryEntity();
             inventoryEntity.setProductCode(newProduct.getProductCode());
@@ -103,6 +107,27 @@ public class InventoryServiceImpl implements InventoryUseCase {
         }
 
         return invetoryRepository.save(inventoryEntity);
+
+    }
+
+    @Transactional
+    @Override
+    public InventoryEntity decrementInventory(String productCode, Integer quantity) {
+
+        Optional<InventoryEntity> productDb = invetoryRepository.getByProductCode(productCode);
+
+        if (productDb.isEmpty()){
+            throw (new RuntimeException("No existe el producto por el codigo ingresado, prueba con otro codigo"));
+        }
+
+        if (productDb.get().getStockQuantity() < quantity) {
+            throw (new RuntimeException("No hay stock disponible"));
+        }
+
+        productDb.get().setStockQuantity(productDb.get().getStockQuantity() - quantity);
+
+        return invetoryRepository.save(productDb.get());
+
     }
 
     /**
@@ -115,6 +140,7 @@ public class InventoryServiceImpl implements InventoryUseCase {
     @Transactional
     @Override
     public Boolean deleteByProductCode(String productCode) {
+
         Optional<InventoryEntity> productDb = invetoryRepository.getByProductCode(productCode);
         if (productDb.isEmpty()) {
             throw new RuntimeException("No existe el producto por el código que ingresaste");
@@ -128,5 +154,7 @@ public class InventoryServiceImpl implements InventoryUseCase {
         } else {
             throw new RuntimeException("No hay stock para modificar");
         }
+
     }
+
 }
