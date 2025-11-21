@@ -73,6 +73,7 @@ public class ProductOrderServiceImpl implements IProductOrderUseCase {
     @Override
     public List<ProductOrderEntity> save(ProductListItemDto requestDto) {
 
+
         Optional<OrderRequestDto> order = orderClientRest.getById(requestDto.getOrderId());
         if (order.isEmpty()) {
             throw new RuntimeException("No existe ninguna factura por ese id, falló el Rest");
@@ -80,13 +81,17 @@ public class ProductOrderServiceImpl implements IProductOrderUseCase {
 
         List<ProductOrderEntity> savedItems = new ArrayList<>();
 
+
+
         for (ProductItemDto dto : requestDto.getItems()) {
+
+            BigDecimal unitPrice = inventoryClientRest.getUnitPriceByProductCode(dto.getProductCode());
 
             ProductOrderEntity productOrder = new ProductOrderEntity();
             productOrder.setOrderId(requestDto.getOrderId());
             productOrder.setProductCode(dto.getProductCode());
             productOrder.setQuantity(dto.getQuantity());
-            productOrder.setUnitPrice(dto.getUnitPrice());
+            productOrder.setUnitPrice(unitPrice);
             productOrder.setSubtotal(calculateTotal(productOrder));
             productOrder.setTotalPrice(calculateTotal(productOrder));
 

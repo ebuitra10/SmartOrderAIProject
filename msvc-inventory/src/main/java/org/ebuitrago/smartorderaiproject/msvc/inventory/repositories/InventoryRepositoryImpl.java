@@ -5,6 +5,7 @@ import org.ebuitrago.smartorderaiproject.msvc.inventory.domain.InventoryEntity;
 import org.ebuitrago.smartorderaiproject.msvc.inventory.repositories.jpaRepository.InventoryJpaRespository;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,8 +38,15 @@ public class InventoryRepositoryImpl implements InvetoryRepository {
     }
 
     @Override
+    public Optional<BigDecimal> getUnitPriceByProductCode(String productCode) {
+        return inventoryJpaRespository.findUnitPriceByProductCode(productCode);
+    }
+
+    @Override
     public InventoryEntity save(InventoryEntity newProduct) {
         return inventoryJpaRespository.save(newProduct);
     }
+
+
 }
 

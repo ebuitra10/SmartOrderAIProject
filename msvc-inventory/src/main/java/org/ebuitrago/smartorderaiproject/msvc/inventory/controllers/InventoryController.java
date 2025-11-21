@@ -75,6 +75,16 @@ public class InventoryController {
 
     }
 
+    @GetMapping("/unit-price-by-product/{productCode}")
+    ResponseEntity<?> getUnitPriceByProductCode(@PathVariable String productCode) {
+        try {
+            return ResponseEntity.ok(inventoryUseCase.getUnitPriceByProductCode(productCode));
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
     /**
      * Registra o actualiza un inventario.
      *

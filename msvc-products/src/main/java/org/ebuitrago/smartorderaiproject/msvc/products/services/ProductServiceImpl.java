@@ -90,7 +90,7 @@ public class ProductServiceImpl implements IProductUseCase {
 
         ProductEntity saved = iProductRespository.save(newProduct);
 
-        InventoryRequest inventoryRequest = new InventoryRequest(saved.getProductCode(),1);
+        InventoryRequest inventoryRequest = new InventoryRequest(saved.getProductCode(),1, saved.getPrice());
 
         inventoryClientRest.save(inventoryRequest);
 

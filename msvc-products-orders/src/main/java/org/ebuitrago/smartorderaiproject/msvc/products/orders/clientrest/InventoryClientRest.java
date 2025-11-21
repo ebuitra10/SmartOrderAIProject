@@ -2,9 +2,12 @@ package org.ebuitrago.smartorderaiproject.msvc.products.orders.clientrest;
 
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.math.BigDecimal;
 
 /**
  * Cliente Feign para comunicarse con el microservicio de inventario.
@@ -21,6 +24,10 @@ public interface InventoryClientRest {
      */
     @PutMapping("/inventory/{productCode}/decrement-stock")
     void decrementStock(@PathVariable String productCode, @RequestParam Integer quantity);
+
+
+    @GetMapping("/inventory/unit-price-by-product/{productCode}")
+    BigDecimal getUnitPriceByProductCode(@PathVariable String productCode);
 
 }
 

@@ -3,6 +3,7 @@ package org.ebuitrago.smartorderaiproject.msvc.inventory.services.useCase;
 import org.ebuitrago.smartorderaiproject.msvc.inventory.domain.InventoryEntity;
 import org.ebuitrago.smartorderaiproject.msvc.inventory.domain.dto.InventoryResponseDto;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +45,9 @@ public interface InventoryUseCase {
      * @return el inventario creado o actualizado.
      */
     InventoryEntity createOrUpdateInvetory(InventoryResponseDto newProduct);
+
+
+    Optional<BigDecimal> getUnitPriceByProductCode(String productCode);
 
 
     InventoryEntity decrementInventory(String productCode, Integer quantity);

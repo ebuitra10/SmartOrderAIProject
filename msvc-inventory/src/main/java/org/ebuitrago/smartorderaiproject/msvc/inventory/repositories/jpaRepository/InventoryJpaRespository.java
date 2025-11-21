@@ -1,10 +1,13 @@
 package org.ebuitrago.smartorderaiproject.msvc.inventory.repositories.jpaRepository;
 
+import feign.Param;
 import org.ebuitrago.smartorderaiproject.msvc.inventory.domain.InventoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +35,10 @@ public interface InventoryJpaRespository extends JpaRepository<InventoryEntity, 
      * @return un {@link Optional} que contiene el inventario si existe.
      */
     Optional<InventoryEntity> findByProductCode(String productCode);
+
+
+    @Query("SELECT i.unitPrice FROM InventoryEntity i WHERE i.productCode = :productCode")
+    Optional<BigDecimal> findUnitPriceByProductCode(@Param("productCode") String productCode);
 
     /**
      * Elimina un registro de inventario según el código del producto.

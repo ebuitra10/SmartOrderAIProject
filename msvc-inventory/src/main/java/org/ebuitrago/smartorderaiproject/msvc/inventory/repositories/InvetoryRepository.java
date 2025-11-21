@@ -4,6 +4,7 @@ package org.ebuitrago.smartorderaiproject.msvc.inventory.repositories;
 import org.ebuitrago.smartorderaiproject.msvc.inventory.domain.InventoryEntity;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,8 @@ public interface InvetoryRepository {
      * @return un {@link Optional} con el inventario si existe.
      */
     Optional<InventoryEntity> getByProductCode(String productCode);
+
+    Optional<BigDecimal> getUnitPriceByProductCode(String productCode);
 
     /**
      * Guarda un nuevo inventario o actualiza uno existente.

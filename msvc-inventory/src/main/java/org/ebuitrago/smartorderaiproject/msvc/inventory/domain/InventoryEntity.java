@@ -4,6 +4,7 @@ package org.ebuitrago.smartorderaiproject.msvc.inventory.domain;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -24,6 +25,9 @@ public class InventoryEntity {
 
     @Column(name = "stock_quantity")
     private Integer stockQuantity;
+
+    @Column(name = "unit_price")
+    private BigDecimal unitPrice;
 
     @Transient
     List<InventoryEntity> inventoryEntityList;

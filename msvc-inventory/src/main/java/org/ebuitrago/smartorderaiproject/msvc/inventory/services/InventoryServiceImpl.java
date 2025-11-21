@@ -9,6 +9,7 @@ import org.ebuitrago.smartorderaiproject.msvc.inventory.services.useCase.Invento
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,6 +109,18 @@ public class InventoryServiceImpl implements InventoryUseCase {
 
         return invetoryRepository.save(inventoryEntity);
 
+    }
+
+    @Override
+    public Optional<BigDecimal> getUnitPriceByProductCode(String productCode) {
+
+        Optional<InventoryEntity> product = invetoryRepository.getByProductCode(productCode);
+
+        if (product.isEmpty()) {
+             throw (new RuntimeException("No existe ese prducto, no hay precio unitario a mostrar"));
+        }
+
+        return invetoryRepository.getUnitPriceByProductCode(product.get().getProductCode());
     }
 
     @Transactional
