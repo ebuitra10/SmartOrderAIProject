@@ -22,6 +22,7 @@
         <module>msvc-products</module>
         <module>msvc-inventory</module>
         <module>msvc-products-orders</module>
+        <module>msvc-roles</module>
     </modules>
 
     <properties>
