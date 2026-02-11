@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: msvc-gateway
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/springboot-realm-smartorder-dev
+
+  cloud:
+    gateway:
+      routes:
+
+        - id: orders-service
+          uri: http://localhost:8002
+          predicates:
+            - Path=/api/orders/**
+
+        - id: inventory-service
+          uri: http://localhost:8004
+          predicates:
+            - Path=/api/inventory/**
+
+        - id: products-service
+          uri: http://localhost:8003
+          predicates:
+            - Path=/api/products/**
+
+        - id: product-orders-service
+          uri: http://localhost:8005
+          predicates:
+            - Path=/api/product-orders/**
+
+logging:
+  level:
+    org.springframework.security: DEBUG

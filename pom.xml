@@ -17,12 +17,11 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>msvc-users</module>
         <module>msvc-orders</module>
         <module>msvc-products</module>
         <module>msvc-inventory</module>
         <module>msvc-products-orders</module>
-        <module>msvc-roles</module>
+        <module>msvc-gateway</module>
     </modules>
 
     <properties>
