@@ -161,7 +161,8 @@ public class OrderServiceImpl implements IOrderServiceUseCase {
         }
 
         List<OrderResponseDto> orderResponse = order.stream()
-                .map(orderEntity -> new OrderResponseDto(orderEntity.getId(), orderEntity.getUserId(), orderEntity.getDate()))
+                .map(orderEntity ->
+                        new OrderResponseDto(orderEntity.getId(), orderEntity.getUserId(), orderEntity.getDate()))
                 .toList();
 
         return  orderResponse;

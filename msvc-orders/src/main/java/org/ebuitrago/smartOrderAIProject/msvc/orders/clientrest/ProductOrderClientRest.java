@@ -2,6 +2,7 @@ package org.ebuitrago.smartOrderAIProject.msvc.orders.clientrest;
 
 
 import jakarta.validation.Valid;
+import org.ebuitrago.smartOrderAIProject.msvc.orders.config.FeignConfig;
 import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.dto.ProductOrderResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
  * Expone las operaciones remotas necesarias para crear y eliminar
  * registros de productos asociados a una orden.
  */
-@FeignClient(name = "msvc-products-orders", url = "http://localhost:8005")
+@FeignClient(name = "msvc-products-orders",
+             url = "http://localhost:8005",
+             configuration =  FeignConfig.class)
 public interface ProductOrderClientRest {
 
     /**

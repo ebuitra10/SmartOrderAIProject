@@ -1,5 +1,6 @@
 package org.ebuitrago.smartorderaiproject.msvc.products.clientRest;
 
+import org.ebuitrago.smartorderaiproject.msvc.products.config.FeignConfig;
 import org.ebuitrago.smartorderaiproject.msvc.products.domain.dto.InventoryRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
  * Proporciona métodos para registrar, eliminar y consultar el stock de productos.
  * </p>
  */
-@FeignClient(name = "msvc-inventory", url = "http://localhost:8004/api/inventory")
+@FeignClient(name = "msvc-inventory",
+             url = "http://localhost:8004/api/inventory",
+             configuration = FeignConfig.class)
 public interface InventoryClientRest {
 
     /**

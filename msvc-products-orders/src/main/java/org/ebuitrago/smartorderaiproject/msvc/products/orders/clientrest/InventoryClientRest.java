@@ -1,6 +1,7 @@
 package org.ebuitrago.smartorderaiproject.msvc.products.orders.clientrest;
 
 
+import org.ebuitrago.smartorderaiproject.msvc.products.orders.config.FeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +14,9 @@ import java.math.BigDecimal;
  * Cliente Feign para comunicarse con el microservicio de inventario.
  * Permite actualizar el stock de un producto reduciendo la cantidad disponible.
  */
-@FeignClient(name = "msvc-inventory", url = "http://localhost:8004/api")
+@FeignClient(name = "msvc-inventory",
+             url = "http://localhost:8004/api/inventory",
+             configuration = FeignConfig.class)
 public interface InventoryClientRest {
 
     /**

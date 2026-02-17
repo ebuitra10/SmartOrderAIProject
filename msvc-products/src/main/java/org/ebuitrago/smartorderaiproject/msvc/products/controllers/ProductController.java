@@ -8,11 +8,11 @@ import org.ebuitrago.smartorderaiproject.msvc.products.domain.ProductEntity;
 import org.ebuitrago.smartorderaiproject.msvc.products.services.useCase.IProductUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,6 +40,11 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(iProductUseCase.getAll());
+    }
+
+    @GetMapping("/debug")
+    public Object debug(Authentication authentication) {
+        return authentication.getAuthorities();
     }
 
     /**

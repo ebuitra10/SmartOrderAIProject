@@ -1,5 +1,6 @@
 package org.ebuitrago.smartorderaiproject.msvc.products.orders.clientrest;
 
+import org.ebuitrago.smartorderaiproject.msvc.products.orders.config.FeignConfig;
 import org.ebuitrago.smartorderaiproject.msvc.products.orders.domain.dto.OrderRequestDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,9 @@ import java.util.Optional;
  * Cliente Feign para comunicarse con el microservicio de órdenes.
  * Permite consultar información de una orden por su identificador.
  */
-@FeignClient(name = "msvc-orders", url = "http://localhost:8002/api")
+@FeignClient(name = "msvc-orders",
+             url = "http://localhost:8002/api/orders",
+             configuration = FeignConfig.class)
 public interface OrderClientRest {
 
     /**
@@ -22,5 +25,6 @@ public interface OrderClientRest {
      */
     @GetMapping("/orders/{id}")
     Optional<OrderRequestDto> getById(@PathVariable Integer id);
+
 }
 
