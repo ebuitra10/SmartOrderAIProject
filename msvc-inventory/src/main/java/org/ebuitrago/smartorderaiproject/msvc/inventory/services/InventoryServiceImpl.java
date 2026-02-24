@@ -105,6 +105,7 @@ public class InventoryServiceImpl implements InventoryUseCase {
             inventoryEntity = new InventoryEntity();
             inventoryEntity.setProductCode(newProduct.getProductCode());
             inventoryEntity.setStockQuantity(newProduct.getInitialStock());
+            inventoryEntity.setUnitPrice(newProduct.getUnitPrice());
         }
 
         return invetoryRepository.save(inventoryEntity);

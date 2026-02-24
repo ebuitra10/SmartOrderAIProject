@@ -27,7 +27,7 @@ public interface IOrderRepository {
      * @param userId el usuario con su documento a buscar para filtrar las ordenes
      * @return una lista de ordenes {@link OrderEntity} asociadas al usuario
      */
-    List<OrderEntity> getByUserId(Integer userId);
+    List<OrderEntity> getByUserId(String userId);
 
     /**
      * Busca una orden específica por su identificador único.

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * registros de productos asociados a una orden.
  */
 @FeignClient(name = "msvc-products-orders",
-             url = "http://localhost:8005",
+             url = "${msvc.products.orders.url}",
              configuration =  FeignConfig.class)
 public interface ProductOrderClientRest {
 

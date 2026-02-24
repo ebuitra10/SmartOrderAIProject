@@ -133,7 +133,7 @@ public class OrderController {
      * @return la lista de ordenes filtrada por el usuario ingresado
      */
     @GetMapping("/orders-by-user/{userId}")
-    public ResponseEntity<?> getOrdersByUser(@Valid @PathVariable Integer userId) {
+    public ResponseEntity<?> getOrdersByUser(@Valid @PathVariable String userId) {
         try {
             return ResponseEntity.ok(iOrderServiceUseCase.getOrdersByUser(userId));
         }catch (Exception e) {

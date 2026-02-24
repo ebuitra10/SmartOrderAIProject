@@ -29,6 +29,6 @@ public interface IOrderJpaRepository extends JpaRepository<OrderEntity, Integer>
      * @param userId el usuario para filtrar sus ordenes
      * @return Una lista de ordenes {@link OrderEntity} que coindicen con el usuario
      */
-    List<OrderEntity> findByUserId(Integer userId);
+    List<OrderEntity> findByUserId(String userId);
 
 }

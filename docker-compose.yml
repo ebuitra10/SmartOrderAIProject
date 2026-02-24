@@ -1,0 +1,232 @@
+version: "3.9"
+
+services:
+
+  # =====================================
+  # KEYCLOAK
+  # =====================================
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.4.5
+    container_name: keycloak
+    command: start-dev --import-realm
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 9090
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_BACKCHANNEL: false
+    ports:
+      - "9090:8080"
+    volumes:
+      - ./realms:/opt/keycloak/data/import
+    networks:
+      - smartorder-network
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+
+  # ===========================
+  # GATEWAY
+  # ===========================
+
+  msvc-gateway:
+    build:
+      context: .
+      dockerfile: msvc-gateway/Dockerfile
+    container_name: msvc-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - msvc-orders
+      - msvc-products
+      - msvc-products-orders
+      - msvc-inventory
+      - keycloak
+    networks:
+      - smartorder-network
+    restart: always
+
+  # ==================================
+  # POSTGRES - ORDERS
+  # ==================================
+  postgres-orders:
+    image: postgres:15
+    container_name: postgres-orders
+    environment:
+      POSTGRES_DB: msvc_orders
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    volumes:
+      - orders_data:/var/lib/postgresql/data
+    networks:
+      - smartorder-network
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ==================================
+  # POSTGRES - PRODUCTS
+  # ==================================
+  postgres-products:
+    image: postgres:15
+    container_name: postgres-products
+    environment:
+      POSTGRES_DB: msvc_products
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    volumes:
+      - products_data:/var/lib/postgresql/data
+    networks:
+      - smartorder-network
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ================================
+  # POSTGRES - INVENTORY
+  # ================================
+  postgres-inventory:
+    image: postgres:15
+    container_name: postgres-inventory
+    environment:
+      POSTGRES_DB: msvc_inventory
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    volumes:
+      - inventory_data:/var/lib/postgresql/data
+    networks:
+      - smartorder-network
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ==================================
+  # 🗄 POSTGRES - PRODUCTS-ORDERS
+  # ==================================
+  postgres-products-orders:
+    image: postgres:15
+    container_name: postgres-products-orders
+    environment:
+      POSTGRES_DB: msvc_products_orders
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    volumes:
+      - products_orders_data:/var/lib/postgresql/data
+    networks:
+      - smartorder-network
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ==================================
+  #  MSVC ORDERS
+  # ==================================
+  msvc-orders:
+    build:
+      context: .
+      dockerfile: msvc-orders/Dockerfile
+    container_name: msvc-orders
+    env_file:
+      - ./msvc-orders/.env
+    ports:
+      - "8002:8002"
+    depends_on:
+      - keycloak
+      - postgres-orders
+
+    networks:
+      - smartorder-network
+    restart: always
+
+  # ==================================
+  # MSVC PRODUCTS
+  # ==================================
+  msvc-products:
+    build:
+      context: .
+      dockerfile: msvc-products/Dockerfile
+    container_name: msvc-products
+    env_file:
+      - ./msvc-products/.env
+    ports:
+      - "8003:8003"
+    depends_on:
+      - postgres-products
+      - keycloak
+
+    networks:
+      - smartorder-network
+    restart: always
+
+  # ==================================
+  # MSVC INVENTORY
+  # ==================================
+  msvc-inventory:
+    build:
+      context: .
+      dockerfile: msvc-inventory/Dockerfile
+    container_name: msvc-inventory
+    env_file:
+      - ./msvc-inventory/.env
+    ports:
+      - "8004:8004"
+    depends_on:
+      - postgres-inventory
+      - keycloak
+
+    networks:
+      - smartorder-network
+    restart: always
+
+  # ==================================
+  # MSVC PRODUCTS-ORDERS
+  # ==================================
+  msvc-products-orders:
+    build:
+      context: .
+      dockerfile: msvc-products-orders/Dockerfile
+    container_name: msvc-products-orders
+    env_file:
+      - ./msvc-products-orders/.env
+    ports:
+      - "8005:8005"
+    depends_on:
+      - postgres-products-orders
+      - keycloak
+
+    networks:
+      - smartorder-network
+    restart: always
+
+# ==================================
+# NETWORK
+# ==================================
+networks:
+  smartorder-network:
+    driver: bridge
+
+# ==================================
+# VOLUMES
+# ==================================
+volumes:
+  orders_data:
+  products_data:
+  inventory_data:
+  products_orders_data:

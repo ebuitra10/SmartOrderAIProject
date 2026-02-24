@@ -15,27 +15,53 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Configuración de seguridad basada en Spring Security para aplicaciones
+ * con arquitectura Servlet (MVC).
+ * Define autenticación mediante JWT como Resource Server OAuth2,
+ * política stateless, deshabilita CSRF y configura un convertidor
+ * personalizado para mapear los roles del token a autoridades
+ * reconocidas por Spring Security.
+ */
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    /**
+     * Configura la cadena principal de filtros de seguridad.
+     * - Deshabilita CSRF.
+     * - Requiere autenticación para los endpoints /inventory/**.
+     * - Establece política de sesión STATELESS.
+     * - Configura autenticación basada en JWT.
+     *
+     * @param http configuración de seguridad HTTP
+     * @return SecurityFilterChain configurado
+     * @throws Exception en caso de error en la configuración
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
-                        auth -> auth.requestMatchers("/inventory/**").authenticated().anyRequest()
-                                .authenticated())
+                        auth -> auth
+                                .requestMatchers("/inventory/**").authenticated()
+                                .anyRequest().authenticated())
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(oauth ->
                         oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
 
         return http.build();
-
     }
 
+    /**
+     * Convertidor personalizado que extrae los roles del claim
+     * "realm_access" del JWT y los transforma en autoridades
+     * con el prefijo "ROLE_" requerido por Spring Security.
+     *
+     * @return JwtAuthenticationConverter configurado
+     */
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
 

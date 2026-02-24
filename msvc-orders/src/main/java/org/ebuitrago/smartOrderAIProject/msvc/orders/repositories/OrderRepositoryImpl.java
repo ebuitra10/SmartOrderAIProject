@@ -32,7 +32,7 @@ public class OrderRepositoryImpl implements IOrderRepository {
     }
 
     @Override
-    public List<OrderEntity> getByUserId(Integer userId) {
+    public List<OrderEntity> getByUserId(String userId) {
         return iOrderJpaRepository.findByUserId(userId);
     }
 

@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  * Permite actualizar el stock de un producto reduciendo la cantidad disponible.
  */
 @FeignClient(name = "msvc-inventory",
-             url = "http://localhost:8004/api/inventory",
+             url = "${msvc.inventory.url}",
              configuration = FeignConfig.class)
 public interface InventoryClientRest {
 

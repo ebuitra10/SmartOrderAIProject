@@ -71,7 +71,7 @@ public interface IOrderServiceUseCase {
      * @param userId el usuario a buscar para filtrar sus ordenes
      * @return una lista de ordenes {@link OrderEntity} asociadas al usuario
      */
-    List<OrderResponseDto> getOrdersByUser(Integer userId);
+    List<OrderResponseDto> getOrdersByUser(String userId);
 
 
 }

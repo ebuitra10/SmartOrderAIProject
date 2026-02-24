@@ -30,8 +30,8 @@ public class OrderEntity {
      * Identificador del usuario que realizó la orden.
      * Corresponde a una llave foránea externa (ID del usuario).
      */
-    @Column(name = "id_document_user", nullable = false)
-    private Integer userId;
+    @Column(name = "user_id", nullable = false)
+    private String userId;
 
     /**
      * Fecha en que se realizó la orden.

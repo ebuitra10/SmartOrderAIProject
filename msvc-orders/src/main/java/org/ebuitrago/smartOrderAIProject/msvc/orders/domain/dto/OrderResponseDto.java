@@ -30,7 +30,7 @@ public class OrderResponseDto {
      * Identificador del usuario asociado a la orden.
      * En este caso, corresponde al número de documento del usuario.
      */
-    private Integer userId;
+    private String userId;
 
     /**
      * Fecha en que se realizó la orden.

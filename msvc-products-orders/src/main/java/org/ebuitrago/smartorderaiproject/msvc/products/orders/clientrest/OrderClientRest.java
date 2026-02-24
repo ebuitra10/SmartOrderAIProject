@@ -13,7 +13,7 @@ import java.util.Optional;
  * Permite consultar información de una orden por su identificador.
  */
 @FeignClient(name = "msvc-orders",
-             url = "http://localhost:8002/api/orders",
+             url = "${msvc.orders.url}",
              configuration = FeignConfig.class)
 public interface OrderClientRest {
 

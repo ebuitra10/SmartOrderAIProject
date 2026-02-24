@@ -9,6 +9,9 @@ import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.OrderEntity;
 import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.dto.OrderResponseDto;
 import org.ebuitrago.smartOrderAIProject.msvc.orders.repositories.IOrderRepository;
 import org.ebuitrago.smartOrderAIProject.msvc.orders.services.usecase.IOrderServiceUseCase;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
@@ -93,6 +96,14 @@ public class OrderServiceImpl implements IOrderServiceUseCase {
     @Override
     public OrderEntity save(OrderEntity orderEntity) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        JwtAuthenticationToken jwt = (JwtAuthenticationToken) authentication;
+
+        String userId = jwt.getToken().getSubject();
+
+        orderEntity.setUserId(userId);
+
        return iOrderRepository.save(orderEntity);
 
 
@@ -153,7 +164,7 @@ public class OrderServiceImpl implements IOrderServiceUseCase {
      * @return una lista de ordenes asociadas a ese usuario y convertidas en DTO
      */
     @Override
-    public List<OrderResponseDto> getOrdersByUser(Integer userId) {
+    public List<OrderResponseDto> getOrdersByUser(String userId) {
 
         List<OrderEntity> order = iOrderRepository.getByUserId(userId);
         if (order.isEmpty()) {
