@@ -14,6 +14,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -132,6 +134,23 @@ public class OrderServiceImpl implements IOrderServiceUseCase {
         updatedOrder.setPaymentMethod(orderEntity.getPaymentMethod());
 
         return updatedOrder;
+
+    }
+
+
+    @Override
+    public void updateTotalPrice(BigDecimal totaPrice, Integer orderId) {
+
+        Optional<OrderEntity> db = iOrderRepository.getById(orderId);
+
+        if (db.isEmpty()) {
+            throw new RuntimeException("No existe ninguna factura por ese id");
+        }
+
+        db.get().setTotalPrice(totaPrice);
+
+        iOrderRepository.save(db.get());
+
 
     }
 

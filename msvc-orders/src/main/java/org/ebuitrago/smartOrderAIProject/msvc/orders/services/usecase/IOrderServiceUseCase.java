@@ -3,6 +3,7 @@ package org.ebuitrago.smartOrderAIProject.msvc.orders.services.usecase;
 import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.OrderEntity;
 import org.ebuitrago.smartOrderAIProject.msvc.orders.domain.dto.OrderResponseDto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +56,9 @@ public interface IOrderServiceUseCase {
      * @throws RuntimeException si la orden a actualizar no existe en el sistema.
      */
     OrderEntity update(OrderEntity orderEntity);
+
+
+    void updateTotalPrice(BigDecimal totaPrice, Integer orderId);
 
     /**
      * Elimina una orden del sistema por su identificador único.

@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
 
   # =====================================
@@ -61,6 +59,8 @@ services:
       POSTGRES_DB: msvc_orders
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
+    ports:
+      - "5436:5432"
     volumes:
       - orders_data:/var/lib/postgresql/data
     networks:
@@ -82,6 +82,8 @@ services:
       POSTGRES_DB: msvc_products
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
+    ports:
+      - "5433:5432"
     volumes:
       - products_data:/var/lib/postgresql/data
     networks:
@@ -103,6 +105,8 @@ services:
       POSTGRES_DB: msvc_inventory
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
+    ports:
+      - "5434:5432"
     volumes:
       - inventory_data:/var/lib/postgresql/data
     networks:
@@ -124,6 +128,8 @@ services:
       POSTGRES_DB: msvc_products_orders
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
+    ports:
+      - "5435:5432"
     volumes:
       - products_orders_data:/var/lib/postgresql/data
     networks:
@@ -221,6 +227,7 @@ services:
 networks:
   smartorder-network:
     driver: bridge
+
 
 # ==================================
 # VOLUMES

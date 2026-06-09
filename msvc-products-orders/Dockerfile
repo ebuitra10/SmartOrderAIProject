@@ -4,6 +4,13 @@ WORKDIR /app
 
 COPY . .
 
+RUN ls -la && cat -e mvnw | head -n 5
+
+# Limpieza de seguridad (Esto arregla el "not found" si el archivo tiene formato Windows)
+RUN apk add --no-cache sed && \
+    sed -i 's/\r$//' mvnw && \
+    chmod +x mvnw
+
 RUN ./mvnw clean package -pl msvc-products-orders -am -DskipTests
 
 

@@ -56,6 +56,10 @@ public class OrderEntity {
     @Column(name = "payment_method")
     private String paymentMethod;
 
+    @Column(name = "total_price")
+    private BigDecimal totalPrice;
+
+
     /**
      * Lista de órdenes relacionadas. Este atributo es transitorio, por lo que
      * no se guarda en la base de datos. Se usa en procesos internos de negocio,

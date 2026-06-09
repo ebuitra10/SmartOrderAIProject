@@ -39,11 +39,9 @@ public class ProductOrderEntity {
     @NotNull
     private BigDecimal subtotal;
 
-    @NotNull
-    @Column(name = "total_price")
-    private BigDecimal totalPrice;
 
     @Transient
     List<ProductOrderEntity> productOrders;
+
 }
 

@@ -4,6 +4,7 @@ import org.ebuitrago.smartorderaiproject.msvc.products.orders.domain.ProductOrde
 import org.ebuitrago.smartorderaiproject.msvc.products.orders.domain.dto.ProductListItemDto;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +37,10 @@ public interface IProductOrderUseCase {
      * @return lista de entidades registradas
      */
     List<ProductOrderEntity> save(ProductListItemDto requestDto);
+
+
+
+
 
     /**
      * Elimina los datos asociados a una orden.

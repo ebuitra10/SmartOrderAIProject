@@ -81,9 +81,10 @@ public class ProductOrderServiceImpl implements IProductOrderUseCase {
 
         List<ProductOrderEntity> savedItems = new ArrayList<>();
 
-
+        BigDecimal sumTotal = BigDecimal.ZERO;
 
         for (ProductItemDto dto : requestDto.getItems()) {
+
 
             BigDecimal unitPrice = inventoryClientRest.getUnitPriceByProductCode(dto.getProductCode());
 
@@ -93,20 +94,34 @@ public class ProductOrderServiceImpl implements IProductOrderUseCase {
             productOrder.setQuantity(dto.getQuantity());
             productOrder.setUnitPrice(unitPrice);
             productOrder.setSubtotal(calculateTotal(productOrder));
-            productOrder.setTotalPrice(calculateTotal(productOrder));
+
 
             productOrderRepo.save(productOrder);
             savedItems.add(productOrder);
+
 
             try {
                 inventoryClientRest.decrementStock(productOrder.getProductCode(), productOrder.getQuantity());
             } catch (FeignException e) {
                 throw new RuntimeException("Error al actualizar inventario: " + e.contentUTF8());
             }
+
+        }
+
+        for (ProductOrderEntity item : savedItems) {
+            sumTotal = sumTotal.add(item.getSubtotal());
+        }
+
+        try {
+            orderClientRest.updateTotalPrice(requestDto.getOrderId(),  sumTotal);
+        } catch (FeignException e) {
+            throw new RuntimeException("Error al actualizar total de la orden: " + e.contentUTF8());
         }
 
         return savedItems;
     }
+
+
 
     /**
      * Elimina un registro basado en el ID de la orden.

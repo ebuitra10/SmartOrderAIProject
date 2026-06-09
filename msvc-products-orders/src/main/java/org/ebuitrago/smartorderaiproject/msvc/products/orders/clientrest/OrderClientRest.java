@@ -5,7 +5,10 @@ import org.ebuitrago.smartorderaiproject.msvc.products.orders.domain.dto.OrderRe
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
@@ -23,8 +26,16 @@ public interface OrderClientRest {
      * @param id identificador de la orden
      * @return Optional con los datos de la orden si existe
      */
-    @GetMapping("/orders/{id}")
+    @GetMapping("/{id}")
     Optional<OrderRequestDto> getById(@PathVariable Integer id);
+
+    @PutMapping("/{id}/total")
+    void updateTotalPrice(@PathVariable Integer id, @RequestBody BigDecimal totalPrice);
+
+
+
+
+
 
 }
 

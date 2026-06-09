@@ -47,6 +47,8 @@ public class ProductController {
         return authentication.getAuthorities();
     }
 
+    
+
     /**
      * Busca un producto por su identificador único.
      *

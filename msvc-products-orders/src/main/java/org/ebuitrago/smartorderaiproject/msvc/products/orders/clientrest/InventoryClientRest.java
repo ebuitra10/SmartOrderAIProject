@@ -25,11 +25,11 @@ public interface InventoryClientRest {
      * @param productCode código del producto cuyo stock será reducido
      * @param quantity    cantidad a descontar del inventario
      */
-    @PutMapping("/inventory/{productCode}/decrement-stock")
+    @PutMapping("/{productCode}/decrement-stock")
     void decrementStock(@PathVariable String productCode, @RequestParam Integer quantity);
 
 
-    @GetMapping("/inventory/unit-price-by-product/{productCode}")
+    @GetMapping("/unit-price-by-product/{productCode}")
     BigDecimal getUnitPriceByProductCode(@PathVariable String productCode);
 
 }
