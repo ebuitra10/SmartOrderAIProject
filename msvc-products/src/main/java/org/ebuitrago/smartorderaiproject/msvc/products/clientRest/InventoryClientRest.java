@@ -33,7 +33,7 @@ public interface InventoryClientRest {
      * @return mensaje de confirmación.
      */
     @DeleteMapping("/delete-inventory/{productCode}")
-    String delete(@PathVariable String productCode);
+    String deleteAllByProductCode(@PathVariable String productCode);
 
     /**
      * Obtiene la cantidad disponible en inventario de un producto específico.

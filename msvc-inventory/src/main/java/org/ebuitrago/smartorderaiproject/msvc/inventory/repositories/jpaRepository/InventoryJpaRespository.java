@@ -47,6 +47,8 @@ public interface InventoryJpaRespository extends JpaRepository<InventoryEntity, 
      */
     @Transactional
     @Modifying
-    void deleteByProductCode(String productCode);
+    @Query("DELETE FROM InventoryEntity p WHERE p.productCode = :productCode")
+    void deleteAllByProductCode(@Param("productCode") String productCode);
+
 }
 

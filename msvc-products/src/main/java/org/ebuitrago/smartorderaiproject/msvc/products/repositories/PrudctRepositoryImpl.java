@@ -43,7 +43,7 @@ public class PrudctRepositoryImpl implements  IProductRespository {
     }
 
     @Override
-    public void deleteById(Integer id) {
-        iProductJpaRepository.deleteById(id);
+    public void deleteByProductCode(String productCode) {
+        iProductJpaRepository.deleteAllByProductCode(productCode);
     }
 }

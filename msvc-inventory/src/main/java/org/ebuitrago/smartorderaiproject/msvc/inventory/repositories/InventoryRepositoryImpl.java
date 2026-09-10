@@ -47,6 +47,11 @@ public class InventoryRepositoryImpl implements InvetoryRepository {
         return inventoryJpaRespository.save(newProduct);
     }
 
+    @Override
+    public void deleteAllByProductCode(String productCode) {
+        inventoryJpaRespository.deleteAllByProductCode(productCode);
+    }
+
 
 }
 

@@ -134,10 +134,10 @@ public class InventoryController {
      * @return respuesta con el resultado de la operación o mensaje de error.
      */
     @DeleteMapping("/delete-inventory/{productCode}")
-    public ResponseEntity<?> delete(@PathVariable String productCode) {
+    public ResponseEntity<?> deleteAllByProductCode(@PathVariable String productCode) {
 
         try {
-            return ResponseEntity.ok(inventoryUseCase.deleteByProductCode(productCode));
+            return ResponseEntity.ok(inventoryUseCase.deleteAllByProductCode(productCode));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

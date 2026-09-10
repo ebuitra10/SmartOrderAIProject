@@ -1,7 +1,11 @@
 package org.ebuitrago.smartorderaiproject.msvc.products.repositories.JpaRepository;
 
+import feign.Param;
+import jakarta.transaction.Transactional;
 import org.ebuitrago.smartorderaiproject.msvc.products.domain.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -18,6 +22,9 @@ public interface IProductJpaRepository extends JpaRepository<ProductEntity, Inte
 
     List<ProductEntity> findProductEntitiesByProductCode(String productCode);
 
-    ProductEntity deleteByProductCode(String productCode);
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM ProductEntity p WHERE p.productCode = :productCode")
+    void deleteAllByProductCode(@Param("productCode") String productCode);
 
 }

@@ -59,5 +59,12 @@ public interface InventoryUseCase {
      * @return {@code true} si la eliminación fue exitosa; {@code false} en caso contrario.
      */
     Boolean deleteByProductCode(String productCode);
+
+    /**
+     * Elimina todos los registros de inventario segun el codigo del producto
+     * @param productCode
+     * @return {@code true} si la eliminación fue exitosa; {@code false} en caso contrario.
+     */
+    Boolean deleteAllByProductCode(String productCode);
 }
 

@@ -50,7 +50,7 @@ public interface IProductRespository {
     /**
      * Elimina un producto de la base de datos.
      *
-     * @param id la entidad {@link ProductEntity} que se desea eliminar.
+     * @param productCode la entidad {@link ProductEntity} que se desea eliminar.
      */
-    void deleteById(Integer id);
+    void deleteByProductCode(String productCode);
 }

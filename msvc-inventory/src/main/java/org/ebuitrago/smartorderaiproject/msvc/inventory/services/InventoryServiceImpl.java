@@ -171,4 +171,29 @@ public class InventoryServiceImpl implements InventoryUseCase {
 
     }
 
+
+    /**
+     * Elimina todos los productos del inventario segun el codigo de producto
+     *
+     * @param productCode
+     * @return {@code true} si la eliminación fue exitosa;
+     * @throws RuntimeException si el producto no existe
+     */
+    @Transactional
+    @Override
+    public Boolean deleteAllByProductCode(String productCode) {
+
+        Optional<InventoryEntity> productDb = invetoryRepository.getByProductCode(productCode);
+
+        if (productDb.isEmpty()) {
+            throw new RuntimeException("No existe el producto por el código que ingresaste");
+        }
+
+        invetoryRepository.deleteAllByProductCode(productCode);
+
+        return true;
+    }
+
 }
+
+

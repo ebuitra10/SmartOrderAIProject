@@ -49,5 +49,11 @@ public interface InvetoryRepository {
      * @return el inventario guardado.
      */
     InventoryEntity save(InventoryEntity newProduct);
+
+    /**
+     * Elimina todos los registros de inventario asociados a un código de producto.
+     * @param productCode
+     */
+    void deleteAllByProductCode(String productCode);
 }
 

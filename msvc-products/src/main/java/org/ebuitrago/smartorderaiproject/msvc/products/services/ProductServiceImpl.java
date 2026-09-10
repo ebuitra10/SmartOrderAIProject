@@ -147,8 +147,9 @@ public class ProductServiceImpl implements IProductUseCase {
         }
 
 
-        iProductRespository.deleteById(productDb.get().getId());
-        inventoryClientRest.delete(productDb.get().getProductCode());
+        String productCode = productDb.get().getProductCode();
+        iProductRespository.deleteByProductCode(productCode);
+        inventoryClientRest.deleteAllByProductCode(productCode);
 
         return true;
     }
