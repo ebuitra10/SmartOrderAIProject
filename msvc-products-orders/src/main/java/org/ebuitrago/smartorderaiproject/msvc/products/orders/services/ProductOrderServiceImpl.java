@@ -135,12 +135,12 @@ public class ProductOrderServiceImpl implements IProductOrderUseCase {
     @Override
     public Boolean deleteByOrderId(Integer orderId) {
 
-        Optional<ProductOrderEntity> db = productOrderRepo.getByOrderId(orderId);
-        if (db.isEmpty()) {
-            throw new RuntimeException("No existe ninguna factura por ese id");
+        List<ProductOrderEntity> items = productOrderRepo.findAllByOrderId(orderId);
+
+        if (!items.isEmpty()) {
+            productOrderRepo.deleteByOrderId(orderId);
         }
 
-        productOrderRepo.deleteByOrderId(orderId);
         return true;
     }
 

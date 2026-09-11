@@ -39,4 +39,9 @@ public class ProductOrderRepositoryImpl implements  IProductOrderRepository {
     public void deleteByOrderId(Integer orderId) {
         jpaRepository.deleteByOrderId(orderId);
     }
+
+    @Override
+    public List<ProductOrderEntity> findAllByOrderId(Integer orderId) {
+        return jpaRepository.findAllByOrderId(orderId);
+    }
 }

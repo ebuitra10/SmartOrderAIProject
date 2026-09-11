@@ -40,5 +40,7 @@ public interface IProductOrderRepository {
      * @param orderId identificador de la orden.
      */
     void deleteByOrderId(Integer orderId);
+
+    List<ProductOrderEntity> findAllByOrderId(Integer orderId);
 }
 
